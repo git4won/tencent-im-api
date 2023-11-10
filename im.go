@@ -11,18 +11,18 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dobyte/tencent-im/account"
-	"github.com/dobyte/tencent-im/callback"
-	"github.com/dobyte/tencent-im/group"
-	"github.com/dobyte/tencent-im/internal/core"
-	"github.com/dobyte/tencent-im/internal/sign"
-	"github.com/dobyte/tencent-im/mute"
-	"github.com/dobyte/tencent-im/operation"
-	"github.com/dobyte/tencent-im/private"
-	"github.com/dobyte/tencent-im/profile"
-	"github.com/dobyte/tencent-im/push"
-	"github.com/dobyte/tencent-im/recentcontact"
-	"github.com/dobyte/tencent-im/sns"
+	"github.com/git4won/tencent-im-api/account"
+	"github.com/git4won/tencent-im-api/callback"
+	"github.com/git4won/tencent-im-api/group"
+	"github.com/git4won/tencent-im-api/internal/core"
+	"github.com/git4won/tencent-im-api/internal/sign"
+	"github.com/git4won/tencent-im-api/mute"
+	"github.com/git4won/tencent-im-api/operation"
+	"github.com/git4won/tencent-im-api/private"
+	"github.com/git4won/tencent-im-api/profile"
+	"github.com/git4won/tencent-im-api/push"
+	"github.com/git4won/tencent-im-api/recentcontact"
+	"github.com/git4won/tencent-im-api/sns"
 )
 
 type Error = core.Error
@@ -58,6 +58,7 @@ type (
 		AppSecret  string // 密钥信息，可在即时通信 IM 控制台 的应用详情页面中获取，具体操作请参见 获取密钥
 		UserId     string // 用户ID
 		Expiration int    // UserSig过期时间
+		BaseUrl    string
 	}
 
 	UserSig struct {
@@ -117,6 +118,7 @@ func NewIM(opt *Options) IM {
 		AppSecret:  opt.AppSecret,
 		UserId:     opt.UserId,
 		Expiration: opt.Expiration,
+		BaseUrl:    opt.BaseUrl,
 	})}
 }
 

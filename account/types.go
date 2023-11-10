@@ -8,15 +8,15 @@
 package account
 
 import (
-	"github.com/dobyte/tencent-im/internal/types"
+	"github.com/git4won/tencent-im-api/internal/types"
 )
 
 type (
 	// Account 导入单个账号
 	Account struct {
-		UserId   string `json:"Identifier"` // （必填）用户名，长度不超过32字节
-		Nickname string `json:"Nick"`       // （选填）用户昵称
-		FaceUrl  string `json:"FaceUrl"`    // （选填）用户头像 URL
+		UserId   string `json:"UserID"`  // （必填）用户名，长度不超过32字节
+		Nickname string `json:"Nick"`    // （选填）用户昵称
+		FaceUrl  string `json:"FaceUrl"` // （选填）用户头像 URL
 	}
 
 	// 批量导入账号（参数）

@@ -14,15 +14,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dobyte/tencent-im"
-	"github.com/dobyte/tencent-im/account"
-	"github.com/dobyte/tencent-im/group"
-	"github.com/dobyte/tencent-im/operation"
-	"github.com/dobyte/tencent-im/private"
-	"github.com/dobyte/tencent-im/profile"
-	"github.com/dobyte/tencent-im/push"
-	"github.com/dobyte/tencent-im/recentcontact"
-	"github.com/dobyte/tencent-im/sns"
+	"github.com/git4won/tencent-im-api"
+	"github.com/git4won/tencent-im-api/account"
+	"github.com/git4won/tencent-im-api/group"
+	"github.com/git4won/tencent-im-api/operation"
+	"github.com/git4won/tencent-im-api/private"
+	"github.com/git4won/tencent-im-api/profile"
+	"github.com/git4won/tencent-im-api/push"
+	"github.com/git4won/tencent-im-api/recentcontact"
+	"github.com/git4won/tencent-im-api/sns"
 )
 
 const (

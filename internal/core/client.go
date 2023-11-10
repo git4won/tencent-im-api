@@ -14,9 +14,9 @@ import (
 
 	"github.com/dobyte/http"
 
-	"github.com/dobyte/tencent-im/internal/enum"
-	"github.com/dobyte/tencent-im/internal/sign"
-	"github.com/dobyte/tencent-im/internal/types"
+	"github.com/git4won/tencent-im-api/internal/enum"
+	"github.com/git4won/tencent-im-api/internal/sign"
+	"github.com/git4won/tencent-im-api/internal/types"
 )
 
 const (
@@ -53,6 +53,7 @@ type Options struct {
 	AppSecret  string // 密钥信息，可在即时通信 IM 控制台 的应用详情页面中获取，具体操作请参见 获取密钥
 	UserId     string // 用户ID
 	Expiration int    // UserSig过期时间
+	BaseUrl    string
 }
 
 func NewClient(opt *Options) Client {
@@ -62,7 +63,9 @@ func NewClient(opt *Options) Client {
 	c.client = http.NewClient()
 	c.client.SetContentType(http.ContentTypeJson)
 	c.client.SetBaseUrl(defaultBaseUrl)
-
+	if opt.BaseUrl != "" {
+		c.client.SetBaseUrl(opt.BaseUrl)
+	}
 	return c
 }
 

@@ -8,8 +8,8 @@
 package recentcontact
 
 import (
-	"github.com/dobyte/tencent-im/internal/core"
-	"github.com/dobyte/tencent-im/internal/types"
+	"github.com/git4won/tencent-im-api/internal/core"
+	"github.com/git4won/tencent-im-api/internal/types"
 )
 
 const (
