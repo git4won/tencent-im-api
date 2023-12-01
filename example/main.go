@@ -40,13 +40,13 @@ func main() {
 	fmt.Println("import account success.")
 
 	// 注册回调事件
-	tim.Callback().Register(callback.EventAfterFriendAdd, func(ack callback.Ack, data interface{}) {
+	tim.Callback().Register(callback.EventAfterFriendAdd, func(ack callback.Ack, data interface{}, query callback.QueryParam) {
 		fmt.Printf("%+v", data.(callback.AfterFriendAdd))
 		_ = ack.AckSuccess(0)
 	})
 
 	// 注册回调事件
-	tim.Callback().Register(callback.EventAfterFriendDelete, func(ack callback.Ack, data interface{}) {
+	tim.Callback().Register(callback.EventAfterFriendDelete, func(ack callback.Ack, data interface{}, query callback.QueryParam) {
 		fmt.Printf("%+v", data.(callback.AfterFriendDelete))
 		_ = ack.AckSuccess(0)
 	})

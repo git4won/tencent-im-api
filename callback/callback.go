@@ -82,9 +82,17 @@ const (
 
 type (
 	Event            int
-	EventHandlerFunc func(ack Ack, data interface{})
+	EventHandlerFunc func(ack Ack, data interface{}, query QueryParam)
 	Options          struct {
 		SdkAppId int
+	}
+
+	QueryParam struct {
+		SdkAppId        string `json:"SdkAppid"`
+		CallbackCommand string `json:"CallbackCommand"`
+		ClientIP        string `json:"ClientIP"`
+		OptPlatform     string `json:"OptPlatform"`
+		ContentType     string `json:"contenttype"`
 	}
 
 	Callback interface {
@@ -132,14 +140,16 @@ func (c *callback) Register(event Event, handler EventHandlerFunc) {
 func (c *callback) Listen(w http.ResponseWriter, r *http.Request) {
 	a := newAck(w)
 
-	appId, ok := c.GetQuery(r, queryAppId)
-	if !ok || appId != strconv.Itoa(c.appId) {
+	query := c.GetQueryParam(r)
+
+	appId := query.SdkAppId
+	if appId != strconv.Itoa(c.appId) {
 		_ = a.AckFailure("invalid sdk appId")
 		return
 	}
 
-	command, ok := c.GetQuery(r, queryCommand)
-	if !ok {
+	command := query.CallbackCommand
+	if command == "" {
 		_ = a.AckFailure("invalid callback command")
 		return
 	}
@@ -155,7 +165,7 @@ func (c *callback) Listen(w http.ResponseWriter, r *http.Request) {
 		_ = a.AckFailure(err.Error())
 	} else {
 		if fn, ok := c.handlers[event]; ok {
-			fn(a, data)
+			fn(a, data, query)
 			return
 		} else {
 			_ = a.AckSuccess(ackSuccessCode)
@@ -250,6 +260,17 @@ func (c *callback) GetQuery(r *http.Request, key string) (string, bool) {
 	} else {
 		return "", false
 	}
+}
+
+// GetQueryParam 解析成 QueryParam
+func (c *callback) GetQueryParam(r *http.Request) QueryParam {
+	param := QueryParam{}
+	param.SdkAppId, _ = c.GetQuery(r, queryAppId)
+	param.CallbackCommand, _ = c.GetQuery(r, queryCommand)
+	param.ClientIP, _ = c.GetQuery(r, queryClientId)
+	param.OptPlatform, _ = c.GetQuery(r, queryOptPlatform)
+	param.ContentType, _ = c.GetQuery(r, queryContentType)
+	return param
 }
 
 func newAck(w http.ResponseWriter) Ack {
