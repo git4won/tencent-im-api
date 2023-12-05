@@ -16,6 +16,7 @@ import (
 	"github.com/git4won/tencent-im-api/group"
 	"github.com/git4won/tencent-im-api/internal/core"
 	"github.com/git4won/tencent-im-api/internal/sign"
+	"github.com/git4won/tencent-im-api/msgext"
 	"github.com/git4won/tencent-im-api/mute"
 	"github.com/git4won/tencent-im-api/operation"
 	"github.com/git4won/tencent-im-api/private"
@@ -51,6 +52,8 @@ type (
 		RecentContact() recentcontact.API
 		// Callback 获取回调接口
 		Callback() callback.Callback
+		// MsgExt 消息扩展
+		MsgExt() msgext.API
 	}
 
 	Options struct {
@@ -108,6 +111,10 @@ type (
 		callback struct {
 			once     sync.Once
 			instance callback.Callback
+		}
+		msgext struct {
+			once     sync.Once
+			instance msgext.API
 		}
 	}
 )
@@ -211,4 +218,11 @@ func (i *im) Callback() callback.Callback {
 		i.callback.instance = callback.NewCallback(i.opt.AppId)
 	})
 	return i.callback.instance
+}
+
+func (i *im) MsgExt() msgext.API {
+	i.msgext.once.Do(func() {
+		i.msgext.instance = msgext.NewAPI(i.client)
+	})
+	return i.msgext.instance
 }

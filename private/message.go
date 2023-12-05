@@ -18,13 +18,14 @@ var errNotSetMsgReceiver = errors.New("message receiver is not set")
 
 type Message struct {
 	entity.Message
-	receivers        []string        // 接收方UserId（可以为多个）
-	syncOtherMachine int             // 同步到其他器
-	timestamp        int64           // 消息时间戳，UNIX 时间戳（单位：秒）
-	seq              int             // 消息序列号
-	customData       interface{}     // 自定义数据
-	sendControls     map[string]bool // 发送消息控制
-	callbackControls map[string]bool // 禁用回调
+	receivers               []string        // 接收方UserId（可以为多个）
+	syncOtherMachine        int             // 同步到其他器
+	timestamp               int64           // 消息时间戳，UNIX 时间戳（单位：秒）
+	seq                     int             // 消息序列号
+	customData              interface{}     // 自定义数据
+	sendControls            map[string]bool // 发送消息控制
+	callbackControls        map[string]bool // 禁用回调
+	supportMessageExtension int             // 是否支持消息扩展，0为不支持，1为支持
 }
 
 func NewMessage() *Message {
@@ -154,6 +155,10 @@ func (m *Message) GetSendMsgControl() (controls []string) {
 	}
 
 	return
+}
+
+func (m *Message) SetSupportMessageExtension(support int) {
+	m.supportMessageExtension = support
 }
 
 // CheckError 检测错误

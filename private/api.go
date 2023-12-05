@@ -140,6 +140,7 @@ func (a *api) SendMessage(message *Message) (ret *SendMessageRet, err error) {
 	req.SendMsgControl = message.GetSendMsgControl()
 	req.ForbidCallbackControl = message.GetForbidCallbackControl()
 	req.SyncOtherMachine = message.GetSyncOtherMachine()
+	req.SupportMessageExtension = message.supportMessageExtension
 
 	resp := &sendMessageResp{}
 
